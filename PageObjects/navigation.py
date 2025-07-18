@@ -13,7 +13,7 @@ from selenium.webdriver.support import expected_conditions as ec
 # from utilities.pageutils import PageUtils
 
 
-class Navigation:
+class IkeaTopNav:
 
     IKEA_LOGO = (By.XPATH, "//img[@src = 'https://www.ikea.com/global/assets/logos/brand/ikea.svg']")
     SEARCH = (By.XPATH, "//input[@type = 'search']")
@@ -22,7 +22,7 @@ class Navigation:
     ACCOUNT = (By.XPATH, "//div[@id = 'hnf-header-profile']")
     LOCATION = (By.XPATH, "//div[@id = 'hnf-header-storepicker']")
     REGION = (By.XPATH, "hnf-header-localisationpicker")
-    GO_SHOPPING = (By.XPATH, "//section[@class = 'hero svelte-17ufdw2']//span[@class =contains(text(),'Go Shopping')]")
+    GO_SHOPPING = (By.XPATH, "//section[@class = 'hero svelte-17ufdw2']//span[@class = contains(text(),'Go Shopping')]")
     def __init__(self, driver):
         self.driver = driver
         # self.utils = PageUtils(self.driver)
@@ -63,6 +63,17 @@ class Navigation:
             print("Cookie modal closed.")
         except Exception as e:
             print("No cookie modal found or failed to close:", e)
+
+    def close_mini_cookie_modal(self):
+        try:
+            # Wait for the cookie modal and click "Accept all" (button text may vary by region/language)
+            ok_button = WebDriverWait(self.driver, 10).until(
+                ec.element_to_be_clickable((By.XPATH, "//button[contains(., 'Ok')]"))
+            )
+            ok_button.click()
+            print("Mini Cookie modal closed.")
+        except Exception as e:
+            print("Mini cookie modal not found or failed to close:", e)
 class IkeaTabNav:
 
     PRODUCTS = (By.XPATH, "//button[@aria-controls = 'tab-products']")
@@ -139,11 +150,11 @@ class CatagoryNav:
 
 class DropdownNav:
 
-    DROPDOWN_CAT1 = (By.XPATH, "(//ul[@class = 'hnf-dropdown__column']//li)[1]")
-    DROPDOWN_CAT2 = (By.XPATH, "(//ul[@class = 'hnf-dropdown__column']//li)[2]")
-    DROPDOWN_CAT3 = (By.XPATH, "(//ul[@class = 'hnf-dropdown__column']//li)[3]")
-    DROPDOWN_CAT4 = (By.XPATH, "(//ul[@class = 'hnf-dropdown__column']//li)[4]")
-    DROPDOWN_CAT5 = (By.XPATH, "(//ul[@class = 'hnf-dropdown__column']//li)[5]")
+    DROPDOWN_CAT1 = (By.XPATH, "(//ul[@class = 'hnf-dropdown__column']//li)[1]//a")
+    DROPDOWN_CAT2 = (By.XPATH, "(//ul[@class = 'hnf-dropdown__column']//li)[2]//a")
+    DROPDOWN_CAT3 = (By.XPATH, "(//ul[@class = 'hnf-dropdown__column']//li)[3]//a")
+    DROPDOWN_CAT4 = (By.XPATH, "(//ul[@class = 'hnf-dropdown__column']//li)[4]//a")
+    DROPDOWN_CAT5 = (By.XPATH, "//ul[@class = 'hnf-dropdown__column']//a[contains(text(),'Outdoor patio furniture')]")
     DROPDOWN_CAT6 = (By.XPATH, "(//ul[@class = 'hnf-dropdown__column']//li)[6]")
     DROPDOWN_CAT7 = (By.XPATH, "(//ul[@class = 'hnf-dropdown__column']//li)[7]")
     DROPDOWN_CAT8 = (By.XPATH, "(//ul[@class = 'hnf-dropdown__column']//li)[8]")
@@ -167,8 +178,20 @@ class DropdownNav:
     def nav_to_dropdown_cat4(self):
         self.wait.until(self.ec.visibility_of_element_located(self.DROPDOWN_CAT4)).click()
 
+    # def nav_to_dropdown_cat5(self):
+    #     self.wait.until(self.ec.visibility_of_element_located(self.DROPDOWN_CAT5)).click()
+
     def nav_to_dropdown_cat5(self):
+        menu = WebDriverWait(self.driver, 10).until(
+            ec.presence_of_element_located((By.XPATH, "//div[@role ='listbox']"))
+        )
+        ActionChains(self.driver).move_to_element(menu)
+        wait_dropdown_cat5 = WebDriverWait(self.driver, 10).until(
+            ec.element_to_be_clickable(self.DROPDOWN_CAT5))
+        wait_dropdown_cat5.click()
+
         self.wait.until(self.ec.visibility_of_element_located(self.DROPDOWN_CAT5)).click()
+
 
     def nav_to_dropdown_cat6(self):
         self.wait.until(self.ec.visibility_of_element_located(self.DROPDOWN_CAT6)).click()
@@ -181,3 +204,29 @@ class DropdownNav:
 
     def nav_to_dropdown_cat9(self):
         self.wait.until(self.ec.visibility_of_element_located(self.DROPDOWN_CAT9)).click()
+
+class RoomSlider:
+
+    BEDROOM = (By.XPATH, "(//div[@id ='hnf-carousel__tabs-navigation-rooms']//span)[1]")
+
+    def __init__(self, driver):
+        self.driver = driver
+        # self.utils = PageUtils(self.driver)
+        self.wait = WebDriverWait(self.driver, 30)
+        self.ec = ec
+
+    def nav_to_bedroom(self):
+        self.wait.until(self.ec.visibility_of_element_located(self.BEDROOM)).click()
+
+class BedMatressSlider:
+
+    MATTRESSES = (By.XPATH, "//a[@data-category-id = 'bm002']")
+
+    def __init__(self, driver):
+        self.driver = driver
+        # self.utils = PageUtils(self.driver)
+        self.wait = WebDriverWait(self.driver, 30)
+        self.ec = ec
+
+    def nav_to_mattresses(self):
+        self.wait.until(self.ec.visibility_of_element_located(self.MATTRESSES)).click()

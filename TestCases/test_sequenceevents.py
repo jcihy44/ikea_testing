@@ -1,8 +1,10 @@
 import pytest
 from utilities.takescreenshotevents import takeScreenshot
 import time
-from PageObjects.navigation import Navigation
-
+from PageObjects import navigation
+from PageObjects import IkeaPLP
+from PageObjects import IkeaPDP
+from PageObjects import IkeaSideCart
 # class CalendarScreenshot:
 
 # py.test -s -v TestCases/test_sequenceevents.py --browser chrome
@@ -25,16 +27,37 @@ class Testnav:
 
     def test_nav(self, setup):
         self.driver = setup
-        self.mn = Navigation(self.driver)
+        self.mn = navigation.IkeaTopNav(self.driver)
+        self.tn = navigation.IkeaTabNav(self.driver)
+        self.cn = navigation.CatagoryNav(self.driver)
+        self.ddn = navigation.DropdownNav(self.driver)
+        self.rs = navigation.RoomSlider(self.driver)
+        self.brm = navigation.BedMatressSlider(self.driver)
+        self.mplp = IkeaPLP.MattressPLP(self.driver)
+        self.pdp = IkeaPDP.IndividualPDP(self.driver)
+        self.sc = IkeaSideCart.SideCart(self.driver)
         # self.tn = navigation.IkeaTabNav(self.driver)
         self.mn.close_cookie_modal()
-        time.sleep(3)
+        time.sleep(1)
         self.mn.go_shopping()
-        time.sleep(2)
+        time.sleep(1)
         self.mn.nav_to_home_page()
+        time.sleep(1)
+        self.mn.close_mini_cookie_modal()
+        time.sleep(1)
+        self.tn.nav_to_rooms()
+        time.sleep(1)
+        self.rs.nav_to_bedroom()
+        time.sleep(1)
+        self.brm.nav_to_mattresses()
+        self.mplp.select_mattress()
+        self.pdp.select_qty(3)
+        self.pdp.add_to_bag()
         time.sleep(5)
+        self.sc.go_to_shopping_bag()
         # self.driver.execute_script("window.scrollBy(0, 250);")
         # time.sleep(1)
+        time.sleep(3)
         takeScreenshot(self.driver)
 
 
