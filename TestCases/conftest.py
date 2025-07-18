@@ -4,7 +4,7 @@ from selenium import webdriver
 
 @pytest.fixture(scope="function")
 def setup():
-    baseurl = "https://www.dutchbros.com/"
+    baseurl = "https://www.ikea.com"
 
     # driver setup
     driver = webdriver.Chrome()
