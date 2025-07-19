@@ -66,7 +66,7 @@ class Testnav:
         time.sleep(5)
         # self.checkout.pick_up()
         # time.sleep(5)
-        self.checkout.CONTINUE_TO_DETAILS()
+        self.checkout.cont_to_details()
         time.sleep(5)
         # self.checkout.fillout_address_form()
         # self.driver.execute_script("window.scrollBy(0, 250);")

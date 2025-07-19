@@ -28,6 +28,7 @@ class IkeaCheckout:
         # self.utils = PageUtils(self.driver)
         self.ec = ec
 
+
     CONTINUE_TO_CHECKOUT = (By.XPATH, "//button//span[@class =  contains(text(),'Continue to checkout')]")
     CONTINUE_AS_GUEST = (By.XPATH, "//button//span[@class =  contains(text(),'Continue as guest')]")
     JOIN_OR_LOGIN = (By.XPATH, "//button//span[@class =  contains(text(),'Join for free or log in')]")
@@ -101,7 +102,8 @@ class IkeaCheckout:
         zip_input.send_keys("85048")  # Use a valid zip code
         zip_input.send_keys(Keys.RETURN)
         time.sleep(5)
-
+    def cont_to_details(self):
+        self.wait.until(self.ec.element_to_be_clickable(self.CONTINUE_TO_DETAILS)).click()
     def pick_up(self):
         self.wait.until(self.ec.visibility_of_element_located(self.PICK_UP)).click()
 
