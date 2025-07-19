@@ -3,7 +3,7 @@ import os
 
 def takeScreenshot(driver):
     fileName = str(round(time.time() * 1000)) + ".png"
-    # screenshotdirectory = "C:\\Users\\jcihy\\PycharmProjects\\ikea_testing\\screenshots\\"
+    
 
     # Ensure the directory exists
     # if not os.path.exists(screenshotdirectory):
