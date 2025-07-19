@@ -62,17 +62,17 @@ class Testnav:
         time.sleep(5)
         self.checkout.cont_as_guest()
         time.sleep(10)
-        # self.checkout.input_zip()
-        # time.sleep(5)
-        self.checkout.pick_up()
+        self.checkout.input_zip()
         time.sleep(5)
-        # self.checkout.CONTINUE_TO_DETAILS()
+        # self.checkout.pick_up()
         # time.sleep(5)
+        self.checkout.CONTINUE_TO_DETAILS()
+        time.sleep(5)
         # self.checkout.fillout_address_form()
         # self.driver.execute_script("window.scrollBy(0, 250);")
         # time.sleep(1)
-        # time.sleep(5)
-        takeScreenshot(self.driver)
+        time.sleep(5)
+        # takeScreenshot(self.driver)
 
 
 

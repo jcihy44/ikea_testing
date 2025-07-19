@@ -33,7 +33,7 @@ class IkeaCheckout:
     JOIN_OR_LOGIN = (By.XPATH, "//button//span[@class =  contains(text(),'Join for free or log in')]")
     ZIP_CODE = (By.ID, "zipInInput")
     PICK_UP = (By.XPATH, "//button[@class = 'order-capture-web__choice-item__action']")
-    CONTINUE_TO_DETAILS = (By.XPATH, "(//button)[34]")
+    CONTINUE_TO_DETAILS = (By.XPATH, "//button[contains(., 'Continue')]")
     EMAIL = (By.ID, "REGULAR-billing-email")
     PHONE = (By.ID, "REGULAR-billing-mobileNumber")
     FIRST_NAME = (By.ID, "REGULAR-billing-firstName")
@@ -92,9 +92,15 @@ class IkeaCheckout:
         self.wait.until(self.ec.visibility_of_element_located(self.CONTINUE_AS_GUEST)).click()
 
     def input_zip(self):
-        zip = self.wait.until(self.ec.visibility_of_element_located(self.ZIP_CODE))
-        zip.click()
-        zip.send_keys("85048")
+        # zip = self.wait.until(self.ec.visibility_of_element_located(self.ZIP_CODE))
+        # zip.click()
+        # zip.send_keys("85048")
+
+        zip_input = self.wait.until(ec.presence_of_element_located((By.ID, "zipInInput")))
+        zip_input.clear()
+        zip_input.send_keys("85048")  # Use a valid zip code
+        zip_input.send_keys(Keys.RETURN)
+        time.sleep(5)
 
     def pick_up(self):
         self.wait.until(self.ec.visibility_of_element_located(self.PICK_UP)).click()
@@ -104,12 +110,13 @@ class IkeaCheckout:
     #     print(el.text)
     #     el.click()
     def cont_to_details(self):
-        # self.wait.until(self.ec.element_to_be_clickable(self.CONTINUE_TO_DETAILS)).click()
+        continue_button = self.wait.until(self.ec.element_to_be_clickable((By.XPATH, "//button[contains(., 'Continue')]")))
+        continue_button.click()
         # button = self.driver.find_element(By.XPATH, ":(//button)[34]")
         # self.driver.execute_script("arguments[0].click();", button)
-        button = self.driver.find_element(By.XPATH, "//button[text()='Continue']")
-        actions = ActionChains(self.driver)
-        actions.move_to_element(button).click().perform()
+        # button = self.driver.find_element(By.XPATH, "//button[text()='Continue']")
+        # actions = ActionChains(self.driver)
+        # actions.move_to_element(button).click().perform()
 
     def generate_string(self):
         prefix = "".join(random.choices(string.ascii_uppercase + string.digits, k=7))
