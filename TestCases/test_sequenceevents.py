@@ -5,6 +5,7 @@ from PageObjects import navigation
 from PageObjects import IkeaPLP
 from PageObjects import IkeaPDP
 from PageObjects import IkeaSideCart
+from PageObjects import IkeaCheckoutPage
 # class CalendarScreenshot:
 
 # py.test -s -v TestCases/test_sequenceevents.py --browser chrome
@@ -36,6 +37,7 @@ class Testnav:
         self.mplp = IkeaPLP.MattressPLP(self.driver)
         self.pdp = IkeaPDP.IndividualPDP(self.driver)
         self.sc = IkeaSideCart.SideCart(self.driver)
+        self.checkout = IkeaCheckoutPage.IkeaCheckout(self.driver)
         # self.tn = navigation.IkeaTabNav(self.driver)
         self.mn.close_cookie_modal()
         time.sleep(1)
@@ -55,10 +57,22 @@ class Testnav:
         self.pdp.add_to_bag()
         time.sleep(5)
         self.sc.go_to_shopping_bag()
+        time.sleep(5)
+        self.checkout.cont_to_checkout()
+        time.sleep(5)
+        self.checkout.cont_as_guest()
+        time.sleep(10)
+        # self.checkout.input_zip()
+        # time.sleep(5)
+        self.checkout.pick_up()
+        time.sleep(5)
+        self.checkout.CONTINUE_TO_DETAILS()
+        time.sleep(5)
+        # self.checkout.fillout_address_form()
         # self.driver.execute_script("window.scrollBy(0, 250);")
         # time.sleep(1)
-        time.sleep(3)
-        takeScreenshot(self.driver)
+        # time.sleep(5)
+        # takeScreenshot(self.driver)
 
 
 
