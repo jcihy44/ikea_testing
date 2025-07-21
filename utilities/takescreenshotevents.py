@@ -3,7 +3,6 @@ import os
 
 def takeScreenshot(driver):
     fileName = str(round(time.time() * 1000)) + ".png"
-    
 
     # Ensure the directory exists
     # if not os.path.exists(screenshotdirectory):
